@@ -28,3 +28,4 @@ nohup java -jar tokgoChatServers-1.0-SNAPSHOT.jar >/home/tokgo/chatlog.txt  2>&1
 
 echo "Execute shell Finish"
 exit
+
