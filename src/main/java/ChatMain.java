@@ -17,7 +17,13 @@ public class ChatMain {
             ChatServers chatServers = new ChatServers();
             System.out.println("开启服务器成功");
             chatServers.setHeartCheckTimeI(1000000);
-            while (true);
+            while (true){
+                try {
+                    Thread.sleep(100000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
