@@ -14,8 +14,10 @@ public class ChatMain {
 
     public static void main(String[] args){
         try {
-            new ChatServers();
+            ChatServers chatServers = new ChatServers();
             System.out.println("开启服务器成功");
+            chatServers.setHeartCheckTimeI(1000000);
+            while (true);
         } catch (IOException e) {
             e.printStackTrace();
         }
