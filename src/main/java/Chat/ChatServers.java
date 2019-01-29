@@ -53,12 +53,13 @@ public class ChatServers extends ServersBaseClass {
 
 
     protected void ClientExit(Socket socket) {
+        String userstr = userLinkMap.get(socket);
         try {
             userInfroMap.remove(userLinkMap.get(socket));
             userLinkMap.remove(socket);
-            System.out.println("客户端退出:"+userLinkMap.get(socket)+",当前连接数量："+(userInfroMap.size()));
+            System.out.println("客户端退出:"+userstr+",当前连接数量："+(userInfroMap.size()));
         }catch (Exception e){
-            System.out.println("客户端退出异常,用户:"+userLinkMap.get(socket));
+            System.out.println("客户端退出异常,用户:"+userstr);
         }
     }
 
