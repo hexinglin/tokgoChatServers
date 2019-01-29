@@ -77,6 +77,9 @@ public class ChatServers extends ServersBaseClass {
                 case "chat":
                     ChatInfromation(mesageJson,Data);
                     break;
+                case "heartbeat":
+                    this.Send(socket,bytes,0,i);
+                    break;
             }
         }catch (Exception e){
             System.out.println("message decode failure:" + Data);
