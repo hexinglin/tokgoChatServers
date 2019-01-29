@@ -32,7 +32,7 @@ public class ChatServers extends ServersBaseClass {
         String receiveAccount = mesageJson.getString("receiveaccount");
         ChatUser recChatUser = userInfroMap.get(receiveAccount);
         if (recChatUser!=null){
-            if (!this.Send(recChatUser.getSocket(),omesage)){
+            if (!this.Send(recChatUser.getSocket(),omesage.getBytes(),omesage.length())){
                 System.out.println("数据发送失败,用户:"+recChatUser.getAccount());
             }
         }else {
