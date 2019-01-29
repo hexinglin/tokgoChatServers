@@ -25,7 +25,6 @@ public class ChatServers extends ServersBaseClass {
 
     public ChatServers() throws IOException {
         this.CreatServer(port,this);
-        this.SetUTF8Mode();
     }
 
     private void ChatInfromation(JSONObject mesageJson, String omesage) throws IOException {
@@ -63,8 +62,8 @@ public class ChatServers extends ServersBaseClass {
         }
     }
 
-    @Override
-    public void Receive(Socket client, String Data) {
+    public void Receive(Socket socket, byte[] bytes, int i) {
+        String Data = new String(bytes,0,i);
         System.out.println("receive message:" + Data);
         //解析json数据
         try {
@@ -72,7 +71,7 @@ public class ChatServers extends ServersBaseClass {
             String action = mesageJson.getString("action");
             switch (action){
                 case "login":
-                    UserLogin(mesageJson,client);
+                    UserLogin(mesageJson,socket);
                     break;
                 case "chat":
                     ChatInfromation(mesageJson,Data);
@@ -81,10 +80,5 @@ public class ChatServers extends ServersBaseClass {
         }catch (Exception e){
             System.out.println("message decode failure:" + Data);
         }
-
-    }
-
-    public void Receive(Socket socket, byte[] bytes, int i) {
-
     }
 }
