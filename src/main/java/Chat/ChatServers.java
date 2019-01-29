@@ -45,7 +45,7 @@ public class ChatServers extends ServersBaseClass {
         String account = mesageJson.getString("account");
         userLinkMap.put(client,account);
         userInfroMap.put(account,new ChatUser(account,client));
-        System.out.println("客户端连接:"+userLinkMap.get(socket)+",当前连接数量："+(userInfroMap.size()));
+        System.out.println("客户端连接:"+userLinkMap.get(client)+",当前连接数量："+(userInfroMap.size()));
     }
 
 
