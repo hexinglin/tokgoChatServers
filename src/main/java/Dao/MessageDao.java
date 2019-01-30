@@ -46,7 +46,7 @@ public class MessageDao {
   }
 
   public void deleteMessage(Integer id) throws SQLException {
-    PreparedStatement statement = conn.prepareStatement(DELETE_MESSAGE);
+    PreparedStatement statement = conn.prepareStatement(DELETE_MESSAGE+id);
     statement.executeUpdate();
   }
 
