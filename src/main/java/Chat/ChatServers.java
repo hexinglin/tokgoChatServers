@@ -36,7 +36,8 @@ public class ChatServers extends ServersBaseClass {
     public Boolean sendMessage(ChatUser chatUser,MesaageData mesaageData){
         String sendstr  ="{\"action\": \"chat\",\"sendaccount\": \""+mesaageData.getSenduser()+"\"" +
           ",\"receiveaccount\": \""+mesaageData.getReceiveuser()+"\",\"message\": \""+mesaageData.getMessage()+"\"}";
-        return Send(chatUser.getSocket(),sendstr.getBytes(),0,sendstr.length());
+        byte[] sendbytes  = sendstr.getBytes();
+        return Send(chatUser.getSocket(),sendbytes,0,sendbytes.length);
     }
 
 
@@ -46,7 +47,8 @@ public class ChatServers extends ServersBaseClass {
         String receiveAccount = mesageJson.getString("receiveaccount");
         ChatUser recChatUser = userInfroMap.get(receiveAccount);
         if (recChatUser!=null){
-            if (!this.Send(recChatUser.getSocket(),omesage.getBytes(),omesage.length())){
+            byte[] sendbytes  = omesage.getBytes();
+            if (!this.Send(recChatUser.getSocket(),sendbytes,sendbytes.length)){
                 System.out.println("数据发送失败,用户:"+recChatUser.getAccount());
             }
         }else {
