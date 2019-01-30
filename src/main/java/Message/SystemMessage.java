@@ -30,21 +30,22 @@ public class SystemMessage extends Thread {
   @Override
   public void run() {
     while (true){
-      //获取当前需要通知的消息
       try {
-        List<MesaageData> mesaageDataList = messageDao.getQQMessages();
-        for (MesaageData mesaageData : mesaageDataList){
-          ChatUser chatUser =chatServers.getUserInfroMap().get(mesaageData.getReceiveuser());
-          if (chatUser != null){
-            if (chatServers.sendMessage(chatUser,mesaageData)){
-              messageDao.deleteMessage(mesaageData.getId());
+      //获取当前需要通知的消息
+        try {
+          List<MesaageData> mesaageDataList = messageDao.getQQMessages();
+          for (MesaageData mesaageData : mesaageDataList){
+            ChatUser chatUser =chatServers.getUserInfroMap().get(mesaageData.getReceiveuser());
+            if (chatUser != null){
+              if (chatServers.sendMessage(chatUser,mesaageData)){
+                messageDao.deleteMessage(mesaageData.getId());
+                sleep(1000);
+              }
             }
           }
+        } catch (SQLException e) {
+          e.printStackTrace();
         }
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
-      try {
         sleep(300000);
       } catch (InterruptedException e) {
         e.printStackTrace();
