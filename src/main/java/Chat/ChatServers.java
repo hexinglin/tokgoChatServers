@@ -37,7 +37,7 @@ public class ChatServers extends ServersBaseClass {
         String sendstr  ="{\"action\": \"chat\",\"sendaccount\": \""+mesaageData.getSenduser()+"\"" +
           ",\"receiveaccount\": \""+mesaageData.getReceiveuser()+"\",\"message\": \""+mesaageData.getMessage()+"\"}";
         byte[] sendbytes  = sendstr.getBytes();
-        return Send(chatUser.getSocket(),sendbytes,0,sendbytes.length);
+        return Send(chatUser.getSocket(),sendbytes,sendbytes.length);
     }
 
 
@@ -94,7 +94,7 @@ public class ChatServers extends ServersBaseClass {
                     ChatInfromation(mesageJson,Data);
                     break;
                 case "heartbeat":
-                    this.Send(socket,bytes,0,i);
+                    this.Send(socket,bytes,i);
                     break;
             }
         }catch (Exception e){
