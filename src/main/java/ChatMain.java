@@ -1,4 +1,6 @@
 import Chat.ChatServers;
+import Message.SystemMessage;
+
 import java.io.IOException;
 
 
@@ -16,7 +18,8 @@ public class ChatMain {
         try {
             ChatServers chatServers = new ChatServers();
             System.out.println("开启服务器成功");
-            chatServers.setHeartCheckTimeI(1000000);
+            SystemMessage systemMessage = new SystemMessage(chatServers);
+            System.out.println("开启系统消息监控成功");
             while (true){
                 try {
                     Thread.sleep(100000);
@@ -24,7 +27,7 @@ public class ChatMain {
                     e.printStackTrace();
                 }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

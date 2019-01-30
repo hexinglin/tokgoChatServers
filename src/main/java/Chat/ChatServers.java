@@ -1,5 +1,6 @@
 package Chat;
 
+import Dao.MesaageData;
 import Net.TCP.ServersBaseClass;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -26,6 +27,19 @@ public class ChatServers extends ServersBaseClass {
     public ChatServers() throws IOException {
         this.CreatServer(port,this);
     }
+
+    public static Map<String, ChatUser> getUserInfroMap() {
+        return userInfroMap;
+    }
+
+
+    public Boolean sendMessage(ChatUser chatUser,MesaageData mesaageData){
+        String sendstr  ="{\"action\": \"chat\",\"sendaccount\": \""+mesaageData.getSenduser()+"\"" +
+          ",\"receiveaccount\": \""+mesaageData.getReceiveuser()+"\",\"message\": \""+mesaageData.getMessage()+"\"}";
+        return Send(chatUser.getSocket(),sendstr.getBytes(),0,sendstr.length());
+    }
+
+
 
     private void ChatInfromation(JSONObject mesageJson, String omesage) throws IOException {
         //数据格式：{"action": "chat","sendaccount": "string","receiveaccount": "string","message": "string"}
