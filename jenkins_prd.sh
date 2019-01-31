@@ -9,3 +9,4 @@ filename=tokgoChatServers-${version}-SNAPSHOT-jar-with-dependencies.jar
 #复制文件到prd路径下
 mkdir /home/tokgo/prd/${version} -p
 cp target/${filename} /home/tokgo/prd/${version}/${filename} -f
+
