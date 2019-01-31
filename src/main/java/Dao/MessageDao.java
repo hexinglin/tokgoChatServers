@@ -11,7 +11,7 @@ import java.util.List;
  * @Version 1.0
  */
 public class MessageDao {
-  private static final String url="jdbc:mysql://118.24.6.171:3306/tokgo_test?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false";    //JDBC的URL
+  private static final String url="jdbc:mysql://118.24.6.171:3306/tokgo_prd?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false";    //JDBC的URL
   private static final String user ="root";
   private static final String password ="123456";
 
