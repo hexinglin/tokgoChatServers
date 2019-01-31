@@ -20,7 +20,7 @@ import java.util.Map;
  */
 public class ChatServers extends ServersBaseClass {
 
-    private Integer port = 6667;
+    private Integer port = 1315;
     private static Map<Socket,String> userLinkMap = new HashMap<>();
     private static Map<String,ChatUser> userInfroMap = new HashMap<>();
 
