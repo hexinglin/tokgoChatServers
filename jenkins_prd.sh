@@ -3,7 +3,7 @@ mvn clean package
 echo "mvn build ok"
 
 #当前版本号，需要和pom文件相同
-version=1.1.0
+version=1.2.0
 filename=tokgoChatServers-${version}-SNAPSHOT-jar-with-dependencies.jar
 
 #复制文件到prd路径下
