@@ -11,9 +11,9 @@ import java.util.List;
  * @Version 1.0
  */
 public class MessageDao {
-  private static final String url="jdbc:mysql://118.24.6.171:3306/tokgo_test?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false";    //JDBC的URL
+  private static final String url="jdbc:mysql://cdb-p7b1ovok.cd.tencentcdb.com:10050/tokgo_test";    //JDBC的URL
   private static final String user ="root";
-  private static final String password ="123456";
+  private static final String password ="141459awdfth";
 
   private static final String QQ_MESSAGES_SQL = "SELECT * FROM t_message where receiveuser='qq_message'";
   private static final String DELETE_MESSAGE = "DELETE FROM t_message WHERE id =";

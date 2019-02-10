@@ -1,6 +1,10 @@
 #!/bin/bash
 mvn clean package
 echo "mvn build ok"
+
+#当前版本号，需要和pom文件相同
+version=1.0.2
+
 #得到进程ID pid，kill该进程
 function PidFind()
 {
@@ -19,13 +23,13 @@ echo "Kill the process $1 ...";
     fi
 
 }
-PidFind tokgoChatServers-1.1.2-SNAPSHOT-jar-with-dependencies.jar
-ps   -ef |grep  tokgoChatServers-1.1.2-SNAPSHOT-jar-with-dependencies.jar
+PidFind tokgoChatServers-${version}-SNAPSHOT-jar-with-dependencies.jar
+ps   -ef |grep  tokgoChatServers-${version}-SNAPSHOT-jar-with-dependencies.jar
 netstat  -anp  |grep   1315
 #执行jar，并将进程挂起，保存进程ID到 pid文件
 echo "kill ok"
 sleep 1s
-nohup java -jar target/tokgoChatServers-1.1.2-SNAPSHOT-jar-with-dependencies.jar >/home/tokgo/chatlog.txt  2>&1 &
+nohup java -jar target/tokgoChatServers-${version}-SNAPSHOT-jar-with-dependencies.jar >/home/tokgo/qa/chatlog.txt  2>&1 &
 echo "Execute shell Finish"
 exit
 
