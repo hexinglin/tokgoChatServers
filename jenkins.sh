@@ -3,33 +3,28 @@ mvn clean package
 echo "mvn build ok"
 
 #当前版本号，需要和pom文件相同
-version=1.0.2
+version=1.2.4
+docker_image=tokgo-chat-qa-${version}
+container_name='tokgo-chat-qa'
 
-#得到进程ID pid，kill该进程
-function PidFind()
-{
-    PIDCOUNT=`ps -ef | grep $1 | grep -v "grep" | grep -v $0 | awk '{print $2}' | wc -l`;
-    if [ ${PIDCOUNT} -gt 1 ] ; then
-        echo "There are too many process contains name[$1]"
-    elif [ ${PIDCOUNT} -le 0 ] ; then
-        echo "No such process[$1]!"
-    else
-        PID=`ps -ef | grep $1 | grep -v "grep" | grep -v ".sh" | awk '{print $2}'` ;
-        echo "Find the PID of this progress!--- process:$1 PID=[${PID}] ";
+echo "正在停止所有docker里面的容器ing..."
+docker stop ${container_name}
+echo "停止成功,正在删除容器ing..."
+docker rm ${container_name}
+docker rmi ${docker_image}
 
-echo "Kill the process $1 ...";
-        sudo kill $2  ${PID};
-        echo "kill $2 ${PID} $1 done!";
-    fi
+echo "正在构建新的容器ing..."
+mkdir docker
+cp -p Dockerfile docker/Dockerfile
+cp -p target/tokgoChatServers-${version}-SNAPSHOT-jar-with-dependencies.jar docker/tokgochat.jar
+cd docker
+docker build -t ${docker_image}:latest .
 
-}
-PidFind tokgoChatServers-${version}-SNAPSHOT-jar-with-dependencies.jar
-ps   -ef |grep  tokgoChatServers-${version}-SNAPSHOT-jar-with-dependencies.jar
-netstat  -anp  |grep   1315
-#执行jar，并将进程挂起，保存进程ID到 pid文件
-echo "kill ok"
-sleep 1s
-nohup java -jar target/tokgoChatServers-${version}-SNAPSHOT-jar-with-dependencies.jar >/home/tokgo/qa/chatlog.txt  2>&1 &
-echo "Execute shell Finish"
-exit
+
+echo "构建成功,运行容器ing..."
+docker run --name ${container_name} -p 6667:6667 -v /etc/localtime:/etc/localtime:ro  -d ${docker_image}
+
+echo `docker ps`
+docker ps
+
 
