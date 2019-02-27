@@ -15,14 +15,16 @@ docker rmi ${docker_image}
 
 echo "正在构建新的容器ing..."
 mkdir docker
-cp -p Dockerfile docker/Dockerfile
-cp -p target/tokgoChatServers-${version}-SNAPSHOT-jar-with-dependencies.jar docker/tokgochat.jar
+mkdir docker/resoures
+cp Dockerfile docker/Dockerfile
+cp resoures/config-prd.json docker/resoures/config.json
+cp target/tokgoChatServers-${version}-SNAPSHOT-jar-with-dependencies.jar docker/tokgochat.jar
 cd docker
 docker build -t ${docker_image}:latest .
 
 
 echo "构建成功,运行容器ing..."
-docker run --name ${container_name} -p 1315:1315 -v /etc/localtime:/etc/localtime:ro  -d ${docker_image}
+docker run --name ${container_name} -p 1315:1315 -v /etc/localtime:/etc/localtime:ro  -v /etc/timezone:/etc/timezone:ro  -d ${docker_image}
 
 echo `docker ps`
 docker ps

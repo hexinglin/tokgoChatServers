@@ -1,5 +1,6 @@
 import Chat.ChatServers;
 import Message.SystemMessage;
+import Utils.ToolUtil;
 
 import java.io.IOException;
 
@@ -17,9 +18,9 @@ public class ChatMain {
     public static void main(String[] args){
         try {
             ChatServers chatServers = new ChatServers();
-            System.out.println("开启服务器成功");
+            ToolUtil.print("开启服务器成功");
             SystemMessage systemMessage = new SystemMessage(chatServers);
-            System.out.println("开启系统消息监控成功");
+            ToolUtil.print("开启系统消息监控成功");
             while (true){
                 try {
                     Thread.sleep(100000);

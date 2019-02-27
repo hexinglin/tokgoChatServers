@@ -2,8 +2,10 @@ package Chat;
 
 import Dao.MesaageData;
 import Net.TCP.ServersBaseClass;
+import Utils.ToolUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import config.SystemConfig;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -20,12 +22,11 @@ import java.util.Map;
  */
 public class ChatServers extends ServersBaseClass {
 
-    private Integer port = 1315;
     private static Map<Socket,String> userLinkMap = new HashMap<>();
     private static Map<String,ChatUser> userInfroMap = new HashMap<>();
 
     public ChatServers() throws IOException {
-        this.CreatServer(port,this);
+        this.CreatServer(SystemConfig.getBaseConfig().getPort(),this);
     }
 
     public static Map<String, ChatUser> getUserInfroMap() {
@@ -49,10 +50,10 @@ public class ChatServers extends ServersBaseClass {
         if (recChatUser!=null){
             byte[] sendbytes  = omesage.getBytes();
             if (!this.Send(recChatUser.getSocket(),sendbytes,sendbytes.length)){
-                System.out.println("数据发送失败,用户:"+recChatUser.getAccount());
+                ToolUtil.print("数据发送失败,用户:"+recChatUser.getAccount());
             }
         }else {
-            System.out.println("数据发送失败,用户 "+receiveAccount+" 未连接");
+            ToolUtil.print("数据发送失败,用户 "+receiveAccount+" 未连接");
         }
     }
 
@@ -61,7 +62,7 @@ public class ChatServers extends ServersBaseClass {
         String account = mesageJson.getString("account");
         userLinkMap.put(client,account);
         userInfroMap.put(account,new ChatUser(account,client));
-        System.out.println("客户端连接:"+userLinkMap.get(client)+",当前连接数量："+(userInfroMap.size()));
+        ToolUtil.print("客户端连接:"+userLinkMap.get(client)+",当前连接数量："+(userInfroMap.size()));
     }
 
 
@@ -73,15 +74,15 @@ public class ChatServers extends ServersBaseClass {
         try {
             userInfroMap.remove(userLinkMap.get(socket));
             userLinkMap.remove(socket);
-            System.out.println("客户端退出:"+userstr+",当前连接数量："+(userInfroMap.size()));
+            ToolUtil.print("客户端退出:"+userstr+",当前连接数量："+(userInfroMap.size()));
         }catch (Exception e){
-            System.out.println("客户端退出异常,用户:"+userstr);
+            ToolUtil.print("客户端退出异常,用户:"+userstr);
         }
     }
 
     public void Receive(Socket socket, byte[] bytes, int i) {
         String Data = new String(bytes,0,i);
-        System.out.println("receive message:" + Data);
+        ToolUtil.print("receive message:" + Data);
         //解析json数据
         try {
             JSONObject mesageJson =  JSON.parseObject(Data);
@@ -98,7 +99,7 @@ public class ChatServers extends ServersBaseClass {
                     break;
             }
         }catch (Exception e){
-            System.out.println("message decode failure:" + Data);
+            ToolUtil.print("message decode failure:" + Data);
         }
     }
 }

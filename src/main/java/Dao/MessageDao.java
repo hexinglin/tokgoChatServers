@@ -1,5 +1,8 @@
 package Dao;
 
+import Utils.ToolUtil;
+import config.SystemConfig;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +14,6 @@ import java.util.List;
  * @Version 1.0
  */
 public class MessageDao {
-  private static final String url="jdbc:mysql://cdb-p7b1ovok.cd.tencentcdb.com:10050/tokgo_prd";    //JDBC的URL
-  private static final String user ="root";
-  private static final String password ="141459awdfth";
 
   private static final String QQ_MESSAGES_SQL = "SELECT * FROM t_message where receiveuser='qq_message'";
   private static final String DELETE_MESSAGE = "DELETE FROM t_message WHERE id =";
@@ -24,15 +24,15 @@ public class MessageDao {
     try {
       //调用Class.forName()方法加载驱动程序
       Class.forName("com.mysql.cj.jdbc.Driver");
-      System.out.println("成功加载MySQL驱动！");
     } catch (ClassNotFoundException e1) {
-      System.out.println("找不到MySQL驱动!");
+      ToolUtil.print("找不到MySQL驱动!");
       e1.printStackTrace();
     }
   }
 
   public MessageDao() throws SQLException {
-    conn = DriverManager.getConnection(url,user,password);
+    conn = DriverManager.getConnection(SystemConfig.getDbConfig().getUrl(),SystemConfig.getDbConfig().getUser()
+            ,SystemConfig.getDbConfig().getPassword());
   }
 
   public List<MesaageData> getQQMessages() throws SQLException {

@@ -1,0 +1,10 @@
+﻿{
+    "base": {
+        "port": 6667
+    },
+    "database": {
+        "url": "jdbc:mysql://cdb-p7b1ovok.cd.tencentcdb.com:10050/tokgo_test",
+        "user": "root",
+        "password": "141459awdfth"
+    }
+}
