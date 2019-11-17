@@ -5,16 +5,16 @@
  */
 package HomeCamera;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import config.SystemConfig;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import config.SystemConfig;
 
 /**
  * 原理：https://www.cnblogs.com/GO-NO-1/p/7241556.html
@@ -82,10 +82,11 @@ public class TransferServer extends Thread {
         SendData(sendPacket.getAddress(), sendPacket.getPort(), dataJson);
     }
 
-    private void Registration(DatagramPacket receivePacket, JSONObject dataJson) throws IOException {
+    private void Registration(DatagramPacket receivePacket, JSONObject dataJson) throws Exception {
         //相机注册
+
         if ("camera".equals(dataJson.getString("identity"))){
-            cameraHost.put(dataJson.getInteger("NO"),receivePacket);
+            cameraHost.put(dataJson.getInteger("NO"), receivePacket);
         }else {
             //观看者注册
             DatagramPacket packet =  cameraHost.get(dataJson.getInteger("NO"));
@@ -99,7 +100,7 @@ public class TransferServer extends Thread {
 
      private void SendData(InetAddress ip,Integer port,Object data) throws IOException{
          String sendStr = JSON.toJSONString(data);
-         byte[] sendByte = sendStr.getBytes();
+         byte[] sendByte = sendStr.getBytes("utf-8");
          DatagramPacket sendpacket = new DatagramPacket(sendByte,sendByte.length,ip,port);
          this.dataSocket.send(sendpacket); 
      }
@@ -108,13 +109,15 @@ public class TransferServer extends Thread {
     @Override
     public void run(){
         byte[] receiveByte = new byte[MAXBUF];
-        DatagramPacket receivePacket = new DatagramPacket(receiveByte,MAXBUF);
+
 
         while(true){
             try {
+                DatagramPacket receivePacket = new DatagramPacket(receiveByte,MAXBUF);
                 this.dataSocket.receive(receivePacket);
                 if(receivePacket.getLength()>0){
                     JSONObject json = JSON.parseObject(new String(receivePacket.getData(),0,receivePacket.getLength()));
+                    System.out.println(json.toJSONString());
                     DealReciveData(receivePacket,json);
                 }
             } catch (Exception ex) {}
