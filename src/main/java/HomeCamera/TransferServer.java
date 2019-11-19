@@ -103,7 +103,7 @@ public class TransferServer extends Thread {
 
      private void SendData(InetAddress ip,Integer port,Object data) throws IOException{
          String sendStr = JSON.toJSONString(data);
-         byte[] sendByte = sendStr.getBytes("utf-8");
+         byte[] sendByte = sendStr.getBytes("gbk");
          DatagramPacket sendpacket = new DatagramPacket(sendByte,sendByte.length,ip,port);
          this.dataSocket.send(sendpacket); 
      }
