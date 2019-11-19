@@ -23,7 +23,7 @@ public class test extends ClientBaseClass {
     }
 
     public test() throws Exception{
-        this.Connect("hecao.pw",20001,this);
+        this.Connect("hecao.pw",20002,this);
         byte[] dd = "action".getBytes("gbk");
         this.Send(dd,dd.length);
 //        this.Send(dd,dd.length,8000, InetAddress.getByName("118.199.210.122"));
