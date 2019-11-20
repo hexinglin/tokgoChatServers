@@ -1,41 +1,23 @@
 package HomeCamera;
 
-import Net.TCP.ServersBaseClass;
 import Net.UDP.UdpReceiveClass;
 
 import java.net.DatagramPacket;
-import java.net.Socket;
-import java.net.SocketException;
 
-public class TransferUDP extends ServersBaseClass {
+public class TransferUDP  extends UdpReceiveClass {
 
-    private Socket sendPacket=null;
-    private int count = 0;
+    private final PicHttpServer picHttpServer;
 
-
-    public TransferUDP() throws Exception {
-        this.CreatServer(6000,this);
-
+    public TransferUDP(PicHttpServer picHttpServer) throws Exception {
+        this.picHttpServer = picHttpServer;
+        this.CreatReceiveMonitor(8000);
     }
 
     @Override
-    protected void ClientExit(Socket socket) {
-
-    }
-
-    @Override
-    public void Receive(Socket socket, byte[] bytes, int i) {
-        System.out.println(i);
-        if (this.sendPacket!=null){
-            if (this.count>0){
-                this.Send(this.sendPacket,bytes,i);
-                this.count--;
-                System.out.println("转发");
-            }
+    protected void Receive(DatagramPacket datagramPacket, byte[] bytes, int i) {
+        if (i>100){
+            this.picHttpServer.setPicByte(bytes,i);
         }
-        if (i == 6){
-            sendPacket = socket;
-            this.count =100;
-        }
+
     }
 }

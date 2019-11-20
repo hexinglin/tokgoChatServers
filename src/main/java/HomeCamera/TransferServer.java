@@ -24,13 +24,15 @@ public class TransferServer extends Thread {
     private static final int MAXBUF = 65500;
     private final DatagramSocket dataSocket;
     private final Map<Integer,DatagramPacket> cameraHost;
+    private final PicHttpServer picHttpServer;
     private final TransferUDP transferUDP;
     
     public TransferServer() throws Exception {
         this.dataSocket = new DatagramSocket(SystemConfig.getHomeCameraConfig().getPort());
         this.start();
         this.cameraHost = new HashMap<>();
-        this.transferUDP = new TransferUDP();
+        this.picHttpServer = new PicHttpServer();
+        this.transferUDP = new TransferUDP(picHttpServer);
     }
 
 
@@ -57,7 +59,7 @@ public class TransferServer extends Thread {
                      sendNotFound(dataJson,receivePacket);
                  }else {
                      SendAddress(dataJson, packet, receivePacket);
-                     this.transferUDP.setSendPacket(receivePacket);
+//                     this.transferUDP.setSendPacket(receivePacket);
                  }
 
              }else if ("regiterList".equals(dataJson.getString("action"))){

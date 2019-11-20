@@ -3,8 +3,6 @@ import HomeCamera.TransferServer;
 import Message.SystemMessage;
 import Utils.ToolUtil;
 
-import java.io.IOException;
-
 
 /**
  * \* Created with IntelliJ IDEA.
