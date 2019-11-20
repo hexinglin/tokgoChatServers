@@ -31,7 +31,7 @@ public class TransferServer extends Thread {
         this.dataSocket = new DatagramSocket(SystemConfig.getHomeCameraConfig().getPort());
         this.start();
         this.cameraHost = new HashMap<>();
-        this.picHttpServer = new PicHttpServer();
+        this.picHttpServer = new PicHttpServer(16000);
         this.transferUDP = new TransferUDP(picHttpServer);
     }
 
